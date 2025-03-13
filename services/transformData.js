@@ -1,6 +1,4 @@
-import translate from 'translate'
-import dotenv from 'dotenv'
-dotenv.config()
+import translator from "./translator.js"
 
 const transformWindDirection = (windDir) =>
 {
@@ -32,17 +30,10 @@ const transformWindDirection = (windDir) =>
     }
 }
 
-function translator(phrase) {
-    translate.engine = 'google';
-    translate.key = process.env.googleapikey;
-   return translate(phrase, { to: 'pl' });
-}
-
 async function transformData(data)
 {
-
     const newData = {}
-    newData.name = data.location.name
+
     newData.temperature = data.current.temp_c
     newData.feelsLike = data.current.feelslike_c
     newData.cloud = data.current.cloud
@@ -61,13 +52,17 @@ async function transformData(data)
 
     newData.windDirection = transformWindDirection(data.current.wind_dir)
 
-    
-    newData.timeZone = data.location.tz_id
-   
-    
     try
     {
-        newData.country = await translator (data.location.country)
+        newData.name = await translator(data.location.name,"pl")
+    }
+    catch(ex)
+    {
+        newData.name = data.location.name
+    }
+    try
+    {
+        newData.country = await translator(data.location.country,"pl")
     }
     catch(ex)
     {
@@ -76,7 +71,7 @@ async function transformData(data)
 
     try
     {
-        newData.timeZone = await translator (data.location.tz_id)
+        newData.timeZone = await translator(data.location.tz_id,"pl")
     }
     catch(ex)
     {
