@@ -41,7 +41,8 @@ async function transformData(data)
     newData.humidity = data.current.humidity
     newData.pressure = data.current.pressure_mb
     newData.windSpeed = data.current.wind_kph
-
+    newData.icon = data.current.condition.icon
+    newData.condition = data.current.condition.text
     const date = new Date(+`${data.location.localtime_epoch}000`)
     newData.localDate = date.toLocaleDateString('pl')
     newData.localTime = date.toLocaleTimeString('pl',{hour:"2-digit",minute:"2-digit"})
