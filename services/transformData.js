@@ -30,17 +30,23 @@ const transformWindDirection = (windDir) =>
     }
 }
 
+const replaceDotToComa = (val)=>
+{
+    val = String(val).replace(".",",")
+    return [val]
+}
+
 async function transformData(data)
 {
     const newData = {}
 
-    newData.temperature = data.current.temp_c
-    newData.feelsLike = data.current.feelslike_c
+    newData.temperature = replaceDotToComa(data.current.temp_c)
+    newData.feelsLike = replaceDotToComa(data.current.feelslike_c)
     newData.cloud = data.current.cloud
-    newData.rain = data.current.precip_mm
+    newData.rain = replaceDotToComa(data.current.precip_mm)
     newData.humidity = data.current.humidity
     newData.pressure = data.current.pressure_mb
-    newData.windSpeed = data.current.wind_kph
+    newData.windSpeed = replaceDotToComa(data.current.wind_kph)
     newData.icon = data.current.condition.icon
     newData.condition = data.current.condition.text
     const date = new Date(+`${data.location.localtime_epoch}000`)
