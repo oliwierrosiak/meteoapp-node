@@ -14,6 +14,11 @@ class ApiControllers
             res.sendStatus(400)
         }
     }
+
+    async post(req,res)
+    {
+        console.log(req.query)
+    }
 }
 
 export default new ApiControllers
