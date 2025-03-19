@@ -1,4 +1,5 @@
 import { getWeather } from "../services/getWeather.js"
+import sendNotification from "../services/sendNotification.js"
 
 class ApiControllers
 {
@@ -17,7 +18,8 @@ class ApiControllers
 
     async post(req,res)
     {
-        console.log(req.query)
+        const weatherInfo = await getWeather(req.query.place)
+        sendNotification(weatherInfo,req.body.notificationToken)
     }
 }
 
