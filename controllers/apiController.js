@@ -19,7 +19,11 @@ class ApiControllers
     async post(req,res)
     {
         const weatherInfo = await getWeather(req.query.place)
-        sendNotification(weatherInfo,req.body.notificationToken)
+        if(weatherInfo)
+        {
+            sendNotification(weatherInfo,req.body.notificationToken)
+
+        }
     }
 }
 

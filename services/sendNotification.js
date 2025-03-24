@@ -6,20 +6,21 @@ const expo = new Expo();
 
 async function sendNotification(weatherInfo,expoToken)
 {
-  console.log(expoToken)
   let messages = [];
   messages.push({
     to: expoToken,
     sound: 'default',
-    title: 'Tytuł powiadomienia',
-    body: 'Treść powiadomienia',
+    title: `Nowa pogoda - ${weatherInfo.name}`,
+    body: `${weatherInfo.condition}, ${weatherInfo.temperature}°C, kliknij aby otworzyc aplikację!`,
   });
     
-  try {
+  try
+  {
     const response = await expo.sendPushNotificationsAsync(messages);
-    console.log('Push notification sent successfully:', response);
-  } catch (error) {
-    console.error('Error sending push notification:', error);
+  }
+  catch(ex)
+  {
+    console.log(ex)
   }
 
 }
